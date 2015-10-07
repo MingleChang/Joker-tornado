@@ -1,0 +1,26 @@
+{%extends '../base.html'%}  
+{%block title%}  
+AddJoke
+{%end%}  
+{%block content%} 
+<p>{{info}}</p>
+<form action="">
+	Title:</br> 
+	<input type="text" name="title"></br>
+	Category:<select name="tagid">
+	{% for tag in tags %}
+		<option value={{tag['tagid']}}>{{tag['content']}}</option>
+	{% end %}
+	</select></br>
+	User:<select name="userid">
+	{% for user in users %}
+		<option value={{user['userid']}}>{{user['username']}}</option>
+	{% end %}
+	</select></br>
+	Content: </br>
+	<textarea rows="10" cols="30" name='content'></textarea></br>
+	Code:
+	<input type='text' name='code'></br>
+	<input type="submit" value="Submit">
+</form>
+{%end%} 
