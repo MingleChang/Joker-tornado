@@ -8,13 +8,21 @@ from handlers.api import APIHandler
 
 class APIJokeSelectHandler(APIHandler):
     def get(self):
-        self.select()
+        start=self.get_argument('start',0)
+        count=self.get_argument('count',10)
+        self.select(start,count)
 
     def post(self):
-        self.select()
+        start=self.get_argument('start',0)
+        count=self.get_argument('count',10)
+        self.select(start,count)
 
-    def select(self):
-        jokes=self.db.query(Joke.jokeid,Joke.title,Joke.content,User.username,Tag.content).filter(Joke.userid==User.userid).filter(Joke.tagid==Tag.tagid).all()
+    def select(self,start,count):
+        jokes=self.db.query(Joke.jokeid,Joke.title,Joke.content,User.username,Tag.content)
+        jokes=jokes.filter(Joke.userid==User.userid)
+        jokes=jokes.filter(Joke.tagid==Tag.tagid)
+        jokes=jokes.offset(start)
+        jokes=jokes.limit(count)
         arr=[]
         for joke in jokes:
             dic={};
